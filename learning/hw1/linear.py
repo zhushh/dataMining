@@ -34,22 +34,21 @@ dataMat = createMat('train.csv')
 m, n = np.shape(dataMat)
 dataMat[0:,0] = np.ones((m, 1), float)
 theta = np.mat([0 for i in range(n-1)])
-alpha = 0.07
+alpha = 0.08
 
 i = 0
 cost = costEstimation(theta, dataMat)
-while abs(cost) > 35:
+while abs(cost) > 36:
     print "the", i, "times, cost = ", cost
     i += 1
     theta = theta - ((alpha / float(m)) * ((theta * dataMat[0:,0:n-1].T - dataMat[0:, n-1].T) * dataMat[0:,0:n-1]))
     # print theta
     cost = costEstimation(theta, dataMat)
 
-print theta
-
 ######################### prediction##############################
 dataMat = createMat('test.csv')
 m, n = np.shape(dataMat)
+dataMat[0:,0] = np.ones((m,1),float)
 data = []
 for i in range(m):
     reference = (theta * dataMat[i, 0:n].T)[0,0]
@@ -61,4 +60,7 @@ writer = csv.writer(prediction)
 writer.writerow(['Id', 'reference'])
 writer.writerows(data)
 prediction.close()
+
+print 'theta:'
+print theta
 print 'finish.'
