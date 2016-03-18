@@ -1,13 +1,10 @@
 #!/usr/bin/python
 # coding: utf-8
 
-import sys
 import csv
 import numpy as np
 
 # return m, n, dataMat
-# flag 用来标记是训练数据还是测试数据
-# flag 为0,表示输入的为训练数据; flag为1表示是测试数据
 def createMat(fileName):
     # read data from file
     csvfile = file(fileName)            # construct file obj
@@ -37,11 +34,11 @@ dataMat = createMat('train.csv')
 m, n = np.shape(dataMat)
 dataMat[0:,0] = np.ones((m, 1), float)
 theta = np.mat([0 for i in range(n-1)])
-alpha = 0.05
+alpha = 0.07
 
 i = 0
 cost = costEstimation(theta, dataMat)
-while abs(cost) > 25:
+while abs(cost) > 35:
     print "the", i, "times, cost = ", cost
     i += 1
     theta = theta - ((alpha / float(m)) * ((theta * dataMat[0:,0:n-1].T - dataMat[0:, n-1].T) * dataMat[0:,0:n-1]))
